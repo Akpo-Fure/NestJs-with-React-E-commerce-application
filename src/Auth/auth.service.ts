@@ -36,6 +36,7 @@ export class AuthService {
 
     const payload = { sub: user.id, admin: user.isAdmin };
     const token = await this.jwt.signAsync(payload);
+
     return { message: 'Log in successful', token };
   }
 }

@@ -28,6 +28,9 @@ let UserController = class UserController {
         const id = req.user.id;
         return this.userService.updateUserProfile(id, dto);
     }
+    getAllUsers() {
+        return this.userService.getAllUsers();
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -45,6 +48,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, dto_1.UpdateProfileDTO]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUserUprofile", null);
+__decorate([
+    (0, common_1.UseGuards)(Guards_1.AdminGuard),
+    (0, common_1.Get)('/users'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getAllUsers", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.UseGuards)(Guards_1.JwtGuard),
     (0, common_1.Controller)('user'),

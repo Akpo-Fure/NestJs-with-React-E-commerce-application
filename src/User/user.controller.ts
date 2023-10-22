@@ -6,7 +6,7 @@ import {
   Request,
   Body,
 } from '@nestjs/common';
-import { JwtGuard } from 'src/Auth/Guards';
+import { JwtGuard, AdminGuard } from 'src/Auth/Guards';
 import { UserService } from './user.service';
 import { UpdateProfileDTO } from './dto';
 
@@ -24,5 +24,11 @@ export class UserController {
   updateUserUprofile(@Request() req, @Body() dto: UpdateProfileDTO) {
     const id = req.user.id;
     return this.userService.updateUserProfile(id, dto);
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('/users')
+  getAllUsers() {
+    return this.userService.getAllUsers();
   }
 }

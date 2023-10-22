@@ -13,6 +13,7 @@ interface Request {
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
+
   async getUser(req: Request) {
     return req.user;
   }
@@ -36,5 +37,19 @@ export class UserService {
 
     delete user.password;
     return user;
+  }
+
+  async getAllUsers() {
+    const users = await this.prisma.user.findMany({
+      select: {
+        name: true,
+        email: true,
+        isAdmin: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return users;
   }
 }

@@ -28,5 +28,12 @@ export declare class UserService {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    getAllUsers(): Promise<{
+        email: string;
+        name: string;
+        isAdmin: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
 }
 export {};
