@@ -1,10 +1,7 @@
-import { Controller, Post } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Controller } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Controller('order')
 export class OrderController {
   constructor(private prisma: PrismaService) {}
-
-  @Post()
-  Signip() {}
 }

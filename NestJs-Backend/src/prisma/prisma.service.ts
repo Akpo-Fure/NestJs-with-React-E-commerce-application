@@ -12,4 +12,12 @@ export class PrismaService extends PrismaClient {
       },
     });
   }
+
+  cleanDB() {
+    return this.$transaction([
+      this.product.deleteMany(),
+      this.user.deleteMany(),
+      this.review.deleteMany(),
+    ]);
+  }
 }
