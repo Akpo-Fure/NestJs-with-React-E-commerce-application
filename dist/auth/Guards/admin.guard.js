@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 let AdminGuard = class AdminGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        if (request.user.isAdmin === false) {
+        if (request.user && request.user.isAdmin === false) {
             throw new common_1.UnauthorizedException({
                 message: 'Only admins can access this route',
             });

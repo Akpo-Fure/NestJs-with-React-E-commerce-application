@@ -13,7 +13,7 @@ var AdminGuard = /** @class */ (function () {
     }
     AdminGuard.prototype.canActivate = function (context) {
         var request = context.switchToHttp().getRequest();
-        if (request.user.isAdmin === false) {
+        if (request.user && request.user.isAdmin === false) {
             throw new common_1.UnauthorizedException({
                 message: 'Only admins can access this route'
             });

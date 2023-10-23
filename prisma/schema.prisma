@@ -11,29 +11,49 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String
-  isAdmin   Boolean  @default(false)
+  isAdmin   Boolean   @default(false)
+  products  Product[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("products")
 }
 
 model Product {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  user         String @id
-  brand        String
-  category     String
-  description  String
-  reviews       
-  rating       Int
-  numReviews   Int
-  price        Int
-  CountInStock Int 
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  image        String?
+  userId       String   @db.ObjectId         
+  brand        String?
+  category     String?
+  description  String?
+  reviews      Review[]
+  rating       Int?      @default(0)
+  numReviews   Int?      @default(0)
+  price        Int      @default(0)
+  countInStock Int?      @default(0)
+  user         User     @relation(fields: [userId], references: [id])
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  @@map("users")
+
+}
+
+model Review {
+  id        String   @id  @default(auto()) @map("_id") @db.ObjectId
+  userId    String 
+  productId String   @db.ObjectId
+  rating    Int 
+  comment   String?
+  product   Product  @relation(fields: [productId], references: [id]) 
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

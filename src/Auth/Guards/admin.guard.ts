@@ -9,7 +9,7 @@ import {
 export class AdminGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    if (request.user.isAdmin === false) {
+    if (request.user && request.user.isAdmin === false) {
       throw new UnauthorizedException({
         message: 'Only admins can access this route',
       });

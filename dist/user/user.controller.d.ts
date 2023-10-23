@@ -22,8 +22,8 @@ export declare class UserController {
         updatedAt: Date;
     }>;
     getAllUsers(): Promise<{
-        email: string;
         name: string;
+        email: string;
         isAdmin: boolean;
         createdAt: Date;
         updatedAt: Date;
