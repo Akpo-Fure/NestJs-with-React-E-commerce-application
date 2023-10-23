@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
@@ -29,10 +29,12 @@ export class AuthService {
         email: dto.email,
       },
     });
-    if (!user) return { message: 'invalid credentials' };
+    if (!user)
+      throw new UnauthorizedException({ message: 'invalid credentials' });
 
     const verify = await argon.verify(user.password, dto.password);
-    if (!verify) return { message: 'invalid credentials' };
+    if (!verify)
+      throw new UnauthorizedException({ message: 'invalid credentials' });
 
     const payload = { sub: user.id, admin: user.isAdmin };
     const token = await this.jwt.signAsync(payload);
