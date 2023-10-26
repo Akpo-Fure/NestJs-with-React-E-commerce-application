@@ -1,7 +1,15 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomeScreen from "./Screens/HomeScreen";
+import "./App.css";
+
 function App() {
   return (
     <>
-      <h1>Welcome to iCommerce</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<HomeScreen />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

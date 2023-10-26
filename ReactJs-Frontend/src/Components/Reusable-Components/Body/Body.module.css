@@ -1,0 +1,17 @@
+@media screen and (min-width: 650px) {
+  .main {
+    padding: 5px 150px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .main {
+    padding: 5px 15px;
+  }
+}
+
+.body {
+  height: 100vh;
+  padding-top: 20px;
+  background-color: aliceblue;
+}
