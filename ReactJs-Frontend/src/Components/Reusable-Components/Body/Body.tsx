@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import styles from "./Body.module.css";
 
-function BodyComponent() {
+function BodyComponent({ children }: { children: ReactNode }) {
   return (
     <>
       <body className={styles.body}>
-        <main className={styles.main}>Products</main>
+        <main className={styles.main}>{children}</main>
       </body>
     </>
   );
