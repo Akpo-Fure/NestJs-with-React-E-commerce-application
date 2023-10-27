@@ -1,16 +1,11 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { IProduct } from "../../Interfaces";
 import styles from "./Home.module.css";
 import BodyComponent from "../Reusable-Components/Body/Body";
 
 function HomeComponent() {
-  interface IProduct {
-    id: string;
-    name: string;
-    price: number;
-  }
-
   const fetchProducts = async () => {
     const response = await axios.get("http://127.0.0.1:3000/product");
     return response.data;
