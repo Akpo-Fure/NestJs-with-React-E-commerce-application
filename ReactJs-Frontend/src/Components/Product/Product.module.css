@@ -29,7 +29,7 @@
 
 .productimage {
   background-color: rgb(210, 207, 203);
-  height: 400px;
+  /* height: 400px; */
   width: 45%;
   margin-right: 20px;
 }
@@ -92,6 +92,22 @@
   border-bottom: none;
   padding: 13px;
 }
+
+.qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid grey;
+  border-bottom: none;
+  padding: 13px;
+}
+
+.dropdown {
+  height: 40px;
+  width: 50%;
+  border-radius: 5px;
+}
+
 .button {
   background-color: gray;
   padding: 5px;

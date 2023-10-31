@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import cart from "./shopping-cart.svg";
+import cartt from "./shopping-cart.svg";
 import user from "./user.svg";
+import { useCart } from "../../../CartContext";
 
 function HeaderComponent() {
+  const { cart } = useCart();
+  console.log(cart);
   return (
     <>
       <main className={styles.header}>
@@ -14,9 +17,9 @@ function HeaderComponent() {
           </Link>
           <div className={styles.headerActions}>
             <Link className={styles.cart} to="/">
-              <img src={cart} alt="" /> Cart
+              <img src={cartt} alt="" /> Cart
             </Link>
-            <Link className={styles.user} to="/">
+            <Link className={styles.user} to="/login">
               <img src={user} alt="" /> Sign in
             </Link>
           </div>

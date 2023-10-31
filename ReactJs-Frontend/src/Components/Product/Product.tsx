@@ -1,19 +1,39 @@
 import { Link, useParams } from "react-router-dom";
-import styles from "./Product.module.css";
-import BodyComponent from "../Reusable-Components/Body/Body";
 import axios from "axios";
 import { useQuery } from "react-query";
+import styles from "./Product.module.css";
+import BodyComponent from "../Reusable-Components/Body/Body";
+import { IProduct } from "../../Interfaces";
+import { useCart, ADD_TO_CART } from "../../CartContext";
+import { useState } from "react";
 
 function ProductComponent() {
   const { id } = useParams();
-  const fetchProduct = async () => {
+  const fetchProduct = async (): Promise<IProduct> => {
     const response = await axios.get(`http://127.0.0.1:3000/product/${id}`);
-    console.log(response);
-    return response;
+    return response.data;
   };
   const { data, isLoading } = useQuery(["getProduct"], () => fetchProduct(), {
     keepPreviousData: true,
   });
+
+  const [selectedQty, setSelectedQty] = useState(1);
+
+  const handleQtyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(event.target.value);
+    setSelectedQty(parseInt(event.target.value, 10));
+  };
+
+  const { dispatch } = useCart();
+  const { cart } = useCart();
+  console.log(cart);
+
+  const addToCart = (product: IProduct, selectedQty: number) => {
+    for (let i = 0; i < selectedQty; i++) {
+      dispatch({ type: ADD_TO_CART, product });
+    }
+  };
+
   if (isLoading) {
     return (
       <>
@@ -32,38 +52,55 @@ function ProductComponent() {
             Go Back
           </Link>
           <div className={styles.product}>
-            <img
-              className={styles.productimage}
-              src="https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s-mac-bluetooth-mouse/gallery/pale-grey/mx-master-3s-for-mac-mouse-top-view-pale-grey.png?v=1"
-              alt=""
-            />
+            <img className={styles.productimage} src={data.image} alt="" />
             <div className={styles.details}>
               <div className={styles.productdescription}>
-                <h3 className={styles.title}>
-                  Airpords Wireless Bluetooth Headphones
-                </h3>
+                <h3 className={styles.title}>{data.name}</h3>
                 <div className={styles.review}>
                   <div></div>
                   <p>13 reviews</p>
                 </div>
-                <p className={styles.productprice}>Price: N20,000</p>
+                <p className={styles.productprice}>Price: N{data.price}</p>
                 <p className={styles.description}>
-                  Description: Bluetooth technology lets you connect it with
-                  compatible devices wirelessly High-quality AAC audio offers
-                  immersive listening experience Built-in microphone
+                  Description: {data.description}
                 </p>
               </div>
               <div className={styles.cart}>
                 <div className={styles.price}>
                   <p className={styles.paragraph}>Price:</p>
-                  <p className={styles.paragraph}>N20,000</p>
+                  <p className={styles.paragraph}>N{data.price}</p>
                 </div>
                 <div className={styles.status}>
                   <p className={styles.paragraph}>Status:</p>
-                  <p className={styles.paragraph}>In Stock</p>
+                  {data.countInStock > 0 ? (
+                    <p className={styles.paragraph}>In Stock</p>
+                  ) : (
+                    <p className={styles.paragraph}>Out of Stock</p>
+                  )}
+                </div>
+                <div className={styles.qty}>
+                  <p className={styles.paragraph}>Qty:</p>
+                  <select
+                    className={styles.dropdown}
+                    value={selectedQty}
+                    onChange={handleQtyChange}
+                  >
+                    {Array.from({ length: data.countInStock }).map(
+                      (_, index) => (
+                        <option key={index + 1} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      )
+                    )}
+                  </select>
                 </div>
                 <div className={styles.buttoncontainer}>
-                  <button className={styles.button}>Add to cart</button>
+                  <button
+                    className={styles.button}
+                    onClick={() => addToCart(data, selectedQty)}
+                  >
+                    Add to cart
+                  </button>
                 </div>
               </div>
             </div>

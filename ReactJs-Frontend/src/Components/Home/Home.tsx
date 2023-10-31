@@ -34,11 +34,7 @@ function HomeComponent() {
                 className={styles.flexcontainer}
                 to={`/product/id/${data.id}`}
               >
-                <img
-                  className={styles.productimage}
-                  src="https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s-mac-bluetooth-mouse/gallery/pale-grey/mx-master-3s-for-mac-mouse-top-view-pale-grey.png?v=1"
-                  alt=""
-                />
+                <img className={styles.productimage} src={data.image} alt="" />
                 <h4 className={styles.producttitle}>{data.name}</h4>
                 <div className={styles.reviews}>1 reviews</div>
                 <p className={styles.price}>₦{data.price}</p>
